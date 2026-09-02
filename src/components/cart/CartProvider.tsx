@@ -4,26 +4,20 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
+  useSyncExternalStore,
 } from "react";
+import * as cartStore from "@/lib/cart-store";
+import type { CartLine } from "@/lib/cart-store";
 import { getProduct, type Product, type ProductSlug } from "@/lib/products";
 
 /* ---------------------------------------------------------------
-   ZAYTOUN — Warenkorb (Client-State)
-   Der Warenkorb hält nur Slug + Menge. Preise und Namen kommen
-   immer aus lib/products.ts, damit Preisänderungen sofort greifen.
-   Der Inhalt wird im localStorage gesichert, damit er einen
-   Seitenwechsel oder Reload übersteht.
+   ZAYTOUN — Warenkorb-Kontext
+   Der Inhalt liegt im externen Store (lib/cart-store.ts); hier
+   kommen nur die abgeleiteten Werte und der Zustand der Schublade
+   dazu.
    --------------------------------------------------------------- */
-
-const STORAGE_KEY = "zaytoun.cart.v1";
-
-export interface CartLine {
-  slug: ProductSlug;
-  quantity: number;
-}
 
 export interface CartLineWithProduct extends CartLine {
   product: Product;
@@ -45,78 +39,26 @@ interface CartContextValue {
 
 const CartContext = createContext<CartContextValue | null>(null);
 
-function readStoredCart(): CartLine[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    const parsed: unknown = JSON.parse(raw);
-    if (!Array.isArray(parsed)) return [];
-    return parsed
-      .filter(
-        (line): line is CartLine =>
-          typeof line === "object" &&
-          line !== null &&
-          typeof (line as CartLine).slug === "string" &&
-          Number.isFinite((line as CartLine).quantity),
-      )
-      .filter((line) => Boolean(getProduct(line.slug)) && line.quantity > 0);
-  } catch {
-    return [];
-  }
-}
-
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [rawLines, setRawLines] = useState<CartLine[]>([]);
+  const rawLines = useSyncExternalStore(
+    cartStore.subscribe,
+    cartStore.getSnapshot,
+    cartStore.getServerSnapshot,
+  );
   const [isOpen, setIsOpen] = useState(false);
-  const [hydrated, setHydrated] = useState(false);
 
-  // Nach dem ersten Render aus dem localStorage laden (vermeidet
-  // eine Abweichung zwischen Server- und Client-Markup).
-  useEffect(() => {
-    setRawLines(readStoredCart());
-    setHydrated(true);
-  }, []);
+  const openCart = useCallback(() => setIsOpen(true), []);
+  const closeCart = useCallback(() => setIsOpen(false), []);
 
-  useEffect(() => {
-    if (!hydrated) return;
-    try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(rawLines));
-    } catch {
-      // Privater Modus o. Ä. — der Warenkorb bleibt dann nur für die Sitzung erhalten.
-    }
-  }, [rawLines, hydrated]);
-
-  const addItem = useCallback((slug: ProductSlug, quantity = 1) => {
-    setRawLines((current) => {
-      const existing = current.find((line) => line.slug === slug);
-      if (existing) {
-        return current.map((line) =>
-          line.slug === slug
-            ? { ...line, quantity: line.quantity + quantity }
-            : line,
-        );
-      }
-      return [...current, { slug, quantity }];
-    });
-    setIsOpen(true);
-  }, []);
-
-  const setQuantity = useCallback((slug: ProductSlug, quantity: number) => {
-    setRawLines((current) =>
-      quantity <= 0
-        ? current.filter((line) => line.slug !== slug)
-        : current.map((line) =>
-            line.slug === slug ? { ...line, quantity } : line,
-          ),
-    );
-  }, []);
-
-  const removeItem = useCallback((slug: ProductSlug) => {
-    setRawLines((current) => current.filter((line) => line.slug !== slug));
-  }, []);
-
-  const clearCart = useCallback(() => setRawLines([]), []);
+  // Beim Hinzufügen öffnet sich die Schublade, damit sichtbar ist,
+  // dass etwas im Warenkorb gelandet ist.
+  const addItem = useCallback(
+    (slug: ProductSlug, quantity = 1) => {
+      cartStore.addItem(slug, quantity);
+      setIsOpen(true);
+    },
+    [],
+  );
 
   const value = useMemo<CartContextValue>(() => {
     const lines = rawLines.flatMap<CartLineWithProduct>((line) => {
@@ -136,14 +78,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       itemCount: lines.reduce((sum, line) => sum + line.quantity, 0),
       subtotalCents: lines.reduce((sum, line) => sum + line.lineTotalCents, 0),
       isOpen,
-      openCart: () => setIsOpen(true),
-      closeCart: () => setIsOpen(false),
+      openCart,
+      closeCart,
       addItem,
-      setQuantity,
-      removeItem,
-      clearCart,
+      setQuantity: cartStore.setQuantity,
+      removeItem: cartStore.removeItem,
+      clearCart: cartStore.clearCart,
     };
-  }, [rawLines, isOpen, addItem, setQuantity, removeItem, clearCart]);
+  }, [rawLines, isOpen, openCart, closeCart, addItem]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
