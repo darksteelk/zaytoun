@@ -20,7 +20,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-30 border-b border-olive/10 bg-cream/95 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-3">
-        <Logo size="sm" showTagline={false} className="items-start" />
+        <Logo variant="mark" size="sm" className="items-start" />
 
         <nav aria-label="Hauptnavigation" className="hidden md:block">
           <ul className="flex items-center gap-8">

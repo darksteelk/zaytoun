@@ -33,7 +33,7 @@ export default function Footer() {
     <footer className="mt-auto bg-olive text-cream">
       <div className="mx-auto grid max-w-6xl gap-12 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4">
         <div className="sm:col-span-2 lg:col-span-1">
-          <Logo size="sm" className="items-start" />
+          <Logo variant="full" tone="light" size="sm" className="items-start" />
           <p className="mt-6 max-w-xs text-xs leading-relaxed text-cream/70">
             {siteConfig.description}
           </p>

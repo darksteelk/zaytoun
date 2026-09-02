@@ -35,11 +35,11 @@ export const images = {
 
 /**
  * Vorschaubild beim Teilen in sozialen Netzwerken (Open Graph).
- * Achtung: Facebook, LinkedIn und X zeigen keine SVG-Dateien an —
- * vor dem Start durch ein PNG oder JPG in 1200 × 630 ersetzen.
+ * Zeigt das Logo auf cremefarbenem Grund. PNG, weil Facebook,
+ * LinkedIn und X keine SVG-Dateien anzeigen.
  */
 export const ogImage = {
-  url: "/images/og-share-image.svg",
+  url: "/images/og-share-image.png",
   width: 1200,
   height: 630,
   alt: "ZAYTOUN — Extra Virgin Olive Oil, Tunisia",

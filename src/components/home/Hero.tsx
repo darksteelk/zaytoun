@@ -31,7 +31,7 @@ export default function Hero() {
 
       <div className="absolute inset-0 flex items-center justify-center px-6">
         <div className="flex max-w-2xl flex-col items-center text-center text-cream">
-          <Logo href="" size="lg" />
+          <Logo href="" variant="full" tone="light" size="lg" eager />
 
           <p className="mt-8 text-xs uppercase tracking-brand text-cream/85 sm:text-sm">
             {siteConfig.tagline}
