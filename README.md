@@ -49,3 +49,21 @@ eingerichtet ist — der Rest der Seite funktioniert normal.
 npm run lint
 npm run build
 ```
+
+## Bilder austauschen
+
+In `public/images` liegen SVG-Platzhalter. Echtes Foto einsetzen:
+Datei dort ablegen und den Pfad in `src/lib/images.ts` (Hero und
+Geschichte) bzw. im `image`-Feld in `src/lib/products.ts` (Flaschen)
+ändern. Das geht Slot für Slot — der Rest bleibt unberührt.
+
+| Slot | Format | Platzhalter |
+| --- | --- | --- |
+| Hero | 16:9, 1600 × 900 | `hero-home.svg` |
+| Geschichte | 3:2, 1200 × 800 | `story-*.svg` |
+| Produkt | 4:5, 800 × 1000 | `product-*.svg` |
+| Teilen-Bild | 1200 × 630 | `og-share-image.svg` |
+
+Das Teilen-Bild (`ogImage` in `src/lib/images.ts`) muss vor dem Start
+ein **PNG oder JPG** werden — Facebook, LinkedIn und X zeigen keine
+SVG-Vorschaubilder an.

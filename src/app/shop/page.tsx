@@ -1,3 +1,4 @@
+import { buildOpenGraph } from "@/lib/seo";
 import type { Metadata } from "next";
 import PageHeader from "@/components/layout/PageHeader";
 import ProductCard from "@/components/product/ProductCard";
@@ -9,12 +10,12 @@ export const metadata: Metadata = {
   description:
     "Bestellen Sie Zaytoun Bio natives Olivenöl extra aus Tunesien: 250 ml, 500 ml oder 1 Liter. Handverlesen, kaltgepresst, in kleinen Chargen abgefüllt.",
   alternates: { canonical: "/shop" },
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "Shop — Bio Olivenöl aus Tunesien | ZAYTOUN",
     description:
       "Bio natives Olivenöl extra in 250 ml, 500 ml und 1 Liter. Handverlesen und kaltgepresst in Tunesien.",
     url: "/shop",
-  },
+  }),
 };
 
 export default function ShopPage() {

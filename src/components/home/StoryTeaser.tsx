@@ -16,7 +16,7 @@ export default function StoryTeaser() {
           alt="Olivenbäume in einem tunesischen Hain am frühen Morgen"
           tone="sage"
           sizes="(min-width: 1024px) 50vw, 90vw"
-          className="aspect-4/3 w-full rounded-lg"
+          className="aspect-3/2 w-full rounded-lg"
         />
 
         <div className="flex flex-col items-start">

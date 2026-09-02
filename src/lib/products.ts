@@ -46,7 +46,7 @@ export const products: Product[] = [
       "Unser natives Olivenöl extra stammt aus biologisch bewirtschafteten Hainen im Norden Tunesiens. Die Oliven werden von Hand gelesen und noch am selben Tag kalt gepresst — so bleiben Aroma, Polyphenole und Vitamin E erhalten.",
       "Die 250-ml-Flasche ist ideal, um Zaytoun zum ersten Mal zu probieren, oder als Geschenk für alle, die gutes Öl zu schätzen wissen.",
     ],
-    image: "",
+    image: "/images/product-250ml.svg",
     imageAlt: "Zaytoun Bio Olivenöl in der 250-ml-Flasche",
   },
   {
@@ -61,7 +61,7 @@ export const products: Product[] = [
       "Unser natives Olivenöl extra stammt aus biologisch bewirtschafteten Hainen im Norden Tunesiens. Die Oliven werden von Hand gelesen und noch am selben Tag kalt gepresst — so bleiben Aroma, Polyphenole und Vitamin E erhalten.",
       "Die 500-ml-Flasche ist unsere meistgekaufte Grösse: genug für mehrere Wochen in einer Küche, in der jeden Tag frisch gekocht wird.",
     ],
-    image: "",
+    image: "/images/product-500ml.svg",
     imageAlt: "Zaytoun Bio Olivenöl in der 500-ml-Flasche",
   },
   {
@@ -76,7 +76,7 @@ export const products: Product[] = [
       "Unser natives Olivenöl extra stammt aus biologisch bewirtschafteten Hainen im Norden Tunesiens. Die Oliven werden von Hand gelesen und noch am selben Tag kalt gepresst — so bleiben Aroma, Polyphenole und Vitamin E erhalten.",
       "Der Liter ist die günstigste Variante pro Milliliter — für Familien, Vielköche und alle, die Zaytoun bereits kennen.",
     ],
-    image: "",
+    image: "/images/product-1l.svg",
     imageAlt: "Zaytoun Bio Olivenöl in der 1-Liter-Flasche",
   },
 ];

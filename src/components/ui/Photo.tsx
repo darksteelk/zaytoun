@@ -49,6 +49,10 @@ export default function Photo({
           fill
           sizes={sizes}
           priority={priority}
+          /* Der Bildoptimierer von Next verarbeitet keine SVGs; die
+             Platzhalter werden daher unverändert ausgeliefert. Echte
+             Fotos (JPG/PNG/WebP) durchlaufen die Optimierung normal. */
+          unoptimized={src.endsWith(".svg")}
           className="object-cover"
         />
       ) : (

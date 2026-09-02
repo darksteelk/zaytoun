@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import { CartProvider } from "@/components/cart/CartProvider";
 import CartDrawer from "@/components/cart/CartDrawer";
 import { siteConfig } from "@/lib/navigation";
+import { ogImage } from "@/lib/images";
 
 /* ---------------------------------------------------------------
    ZAYTOUN — Grundgerüst
@@ -46,11 +47,13 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: "ZAYTOUN — Bio Olivenöl aus Tunesien",
     description: siteConfig.description,
+    images: [ogImage],
   },
   twitter: {
     card: "summary_large_image",
     title: "ZAYTOUN — Bio Olivenöl aus Tunesien",
     description: siteConfig.description,
+    images: [ogImage.url],
   },
 };
 

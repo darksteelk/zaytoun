@@ -1,3 +1,4 @@
+import { buildOpenGraph } from "@/lib/seo";
 import type { Metadata } from "next";
 import PageHeader from "@/components/layout/PageHeader";
 import ContactForm from "@/components/contact/ContactForm";
@@ -15,12 +16,12 @@ export const metadata: Metadata = {
   description:
     "Fragen zu unserem Bio Olivenöl aus Tunesien? Schreiben Sie uns. Anfragen für Grosshandel und Wiederverkauf sind ausdrücklich willkommen.",
   alternates: { canonical: "/kontakt" },
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "Kontakt | ZAYTOUN",
     description:
       "Allgemeine Anfragen, Grosshandel und Wiederverkauf — wir freuen uns auf Ihre Nachricht.",
     url: "/kontakt",
-  },
+  }),
 };
 
 export default function KontaktPage() {

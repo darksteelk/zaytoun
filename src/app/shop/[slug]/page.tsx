@@ -1,3 +1,4 @@
+import { buildOpenGraph } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -41,12 +42,11 @@ export async function generateMetadata({
     title,
     description,
     alternates: { canonical: `/shop/${product.slug}` },
-    openGraph: {
-      type: "website",
+    openGraph: buildOpenGraph({
       title: `${title} | ZAYTOUN`,
       description,
       url: `/shop/${product.slug}`,
-    },
+    }),
   };
 }
 

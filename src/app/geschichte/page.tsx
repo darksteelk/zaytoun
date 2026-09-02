@@ -1,3 +1,4 @@
+import { buildOpenGraph } from "@/lib/seo";
 import type { Metadata } from "next";
 import PageHeader from "@/components/layout/PageHeader";
 import Photo from "@/components/ui/Photo";
@@ -16,12 +17,12 @@ export const metadata: Metadata = {
   description:
     "Wie Zaytoun entsteht: biologischer Anbau, tunesische Sonne, Ernte von Hand und schonende Kaltpressung — erzählt von den Hainen im Norden Tunesiens.",
   alternates: { canonical: "/geschichte" },
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "Unsere Geschichte | ZAYTOUN",
     description:
       "Biologischer Anbau, tunesische Sonne, Ernte von Hand: die Geschichte hinter unserem nativen Olivenöl extra.",
     url: "/geschichte",
-  },
+  }),
 };
 
 interface StorySection {
@@ -116,7 +117,7 @@ export default function GeschichtePage() {
               alt={section.imageAlt}
               tone={index % 2 === 1 ? "cream" : "sage"}
               sizes="(min-width: 1024px) 50vw, 90vw"
-              className={`aspect-4/3 w-full rounded-lg ${
+              className={`aspect-3/2 w-full rounded-lg ${
                 index % 2 === 1 ? "lg:order-2" : ""
               }`}
             />
