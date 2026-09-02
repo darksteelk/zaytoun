@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
 import { CURRENCY, getProduct } from "@/lib/products";
+import { siteConfig } from "@/lib/navigation";
 
 /* ---------------------------------------------------------------
    ZAYTOUN — Stripe Checkout Session
@@ -15,12 +16,14 @@ interface CheckoutItem {
 }
 
 export async function POST(request: Request) {
+  // Solange kein STRIPE_SECRET_KEY hinterlegt ist, bleibt die Kasse zu.
+  // Kundinnen und Kunden bekommen dann einen freundlichen Hinweis statt
+  // einer technischen Fehlermeldung.
   const stripe = getStripe();
   if (!stripe) {
     return NextResponse.json(
       {
-        error:
-          "Die Kasse ist noch nicht eingerichtet (STRIPE_SECRET_KEY fehlt).",
+        error: `Der Onlinekauf ist noch nicht freigeschaltet. Schreiben Sie uns an ${siteConfig.email} — wir nehmen Ihre Bestellung gerne persönlich auf.`,
       },
       { status: 503 },
     );
@@ -63,10 +66,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const origin =
-    request.headers.get("origin") ??
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    "http://localhost:3000";
+  const origin = request.headers.get("origin") ?? siteConfig.url;
 
   try {
     const session = await stripe.checkout.sessions.create({

@@ -190,7 +190,10 @@ export default function CartDrawer() {
               Versandkosten werden an der Kasse berechnet.
             </p>
             {error && (
-              <p role="alert" className="mt-3 text-xs text-red-700">
+              <p
+                role="alert"
+                className="mt-4 rounded-md border border-brown/30 bg-sage-light/25 px-4 py-3 text-xs leading-relaxed text-olive"
+              >
                 {error}
               </p>
             )}
