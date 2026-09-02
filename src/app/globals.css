@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------
+   ZAYTOUN — Design Tokens
+   Farbpalette und Typografie der Marke. Hier zentral anpassen.
+   --------------------------------------------------------------- */
+@theme {
+  /* Markenfarben */
+  --color-olive: #3e4a34; /* Tiefes Olivgrün — primär/dunkel */
+  --color-olive-800: #333d2b;
+  --color-olive-700: #4a5840;
+  --color-sage: #7a8a5a; /* Salbeigrün */
+  --color-sage-light: #b7c09a; /* Helles Salbeigrün */
+  --color-cream: #ece6d6; /* Creme/Off-White — Hintergrund */
+  --color-cream-light: #f5f1e6;
+  --color-brown: #7a6a4a; /* Warmes Braun — Akzente/Footer */
+
+  /* Schriften (werden in layout.tsx über next/font gesetzt) */
+  --font-serif: var(--font-playfair), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-olive);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-display {
+  font-family: var(--font-serif);
+}
+
+/* Kapitälchen-Look für Wortmarke und Trust-Leisten */
+.tracking-brand {
+  letter-spacing: 0.28em;
+}
